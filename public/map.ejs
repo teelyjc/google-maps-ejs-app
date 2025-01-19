@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GoogleMap API</title>
+
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=<%= apiKey %>&loading=async&callback=initMap&v=weekly"
+      defer
+      async
+    ></script>
+
+    <style>
+      .map {
+        display: block;
+        margin: 70px auto;
+        height: 500px;
+        width: 100%;
+        background-color: #ccc;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="maps" class="map"></div>
+
+    <h1 id="name"></h1>
+    <p id="description"></p>
+
+    <script>
+      const target = {
+        name: "<%= targetLocation.name %>",
+        description: "<%= targetLocation.description %>",
+        latitude: "<%= targetLocation.latitude %>",
+        longtitude: "<%= targetLocation.longtitude %>",
+      };
+
+      const nameElement = document.getElementById("name");
+      const descElement = document.getElementById("description");
+
+      nameElement.innerHTML = target.name;
+      descElement.innerHTML = target.description;
+
+      async function initMap() {
+        const mapOptions = {
+          center: {
+            lat: parseFloat(target.latitude),
+            lng: parseFloat(target.longtitude),
+          },
+          zoom: 16,
+          mapTypeId: "roadmap",
+        };
+
+        const element = document.getElementById("maps");
+        const map = new google.maps.Map(element, mapOptions);
+      }
+    </script>
+  </body>
+</html>
